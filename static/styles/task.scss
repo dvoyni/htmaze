@@ -19,14 +19,13 @@
 #layout {
   &, * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
   }
 
   width: 100%;
   height: 100%;
 
   background-color: #ffffff;
+  position: relative;
 
   font-family: Helvetica, Arial, Geneva, sans-serif;
 }
@@ -44,7 +43,21 @@ $toolbar-height: 32px;
   left: 0;
   top: $toolbar-height;
   right: 0;
-  bottom: 1;
+  bottom: 0;
+}
+
+
+.view {
+  border-radius: 20px;
+  border: 5px solid white;
+  padding: 10px;
+  height: 50%;
+
+  > .header {
+    text-align: center;
+    color: #ffffff;
+    padding: 5px 0 10px 0;
+  }
 }
 
 $workspace-width: 60%;
@@ -52,68 +65,82 @@ $workspace-width: 60%;
 #workspace {
   width: $workspace-width;
   height: 100%;
+}
 
-  > * {
-    border-radius: 10px;
-    margin: 5px;
-    padding: 10px;
+#workspace-html,
+#workspace-css {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 
-    > .header {
-      text-align: center;
-      color: #ffffff;
-      padding: 5px 0 10px 0;
+  .element,
+  .line {
+    margin: 2px;
+    padding: 3px 10px;
+  }
+
+  > .elements {
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 3px;
+    min-height: 25px;
+
+    > .element {
+      display: inline-block;
     }
+  }
+
+  > .code {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
 
     .element {
-      margin: 2px;
-      padding: 3px 10px;
+      display: block;
+      border-radius: 0;
     }
 
-    > .elements {
-      border-bottom: 1px solid #ffffff;
-      padding-bottom: 3px;
-      min-height: 25px;
+    > .cursor {
+      position: absolute;
+      display: none;
+      right: 0;
+      left: 0;
+      border-top: 4px dashed rgba(255, 255, 255, 0.75);
+      height: 4px;
+      margin-top: -2px;
 
-      > .element {
-        display: inline-block;
+      &.visible {
+        display: block;
       }
     }
 
-    > .code {
-      position: relative;
-      min-height: 75px;
-      padding-top: 20px;
-      padding-bottom: 20px;
+    .argument {
+      min-width: 30px;
+      border: 1px dashed rgba(255, 255, 255, 0.75);
+      border-radius: 2px;
+      display: inline-block;
+      height: 19px;
 
-      .element {
-        display: block;
-        border-radius: 0;
+      &:not(:empty) {
+        border: none;
 
         > .element {
-          margin-left: 30px;
-          margin-right: 0;
-        }
-
-        > .close-tag {
-          margin-left: 0;
-          background: transparent;
-          padding-left: 0;
+          margin: 0;
+          padding: 1px 5px;
+          border-radius: 3px;
         }
       }
 
-      > .cursor {
-        position: absolute;
-        display: none;
-        right: 0;
-        left: 0;
-        border-top: 4px dashed rgba(255, 255, 255, 0.75);
-        height: 4px;
-        margin-top: -2px;
-
-        &.visible {
-          display: block;
-        }
+      &.dragover {
+        border: 2px dashed rgba(255, 255, 255, 0.75);
+        background-color: rgba(255, 255, 255, 0.35);
       }
+    }
+
+    .text {
+      display: inline-block;
     }
   }
 }
@@ -126,34 +153,27 @@ $workspace-width: 60%;
   background-color: #a8420f;
 }
 
+#preview-target {
+  background-color: #0fa6a6;
+}
+
+#preview-results {
+  background-color: #5aa60f;
+}
+
 #preview {
   width: 100% - $workspace-width;
   height: 100%;
 }
 
 .split-view {
-  $splitter-size: 0;
-
-  .splitter {
-    background-color: #cccccc;
-    display: none;
-  }
-
   &.vertical {
-    .splitter {
-      width: 100%;
-      height: $splitter-size;
-    }
   }
 
   &.horizontal {
     > * {
       display: inline-block;
-    }
-
-    .splitter {
-      width: $splitter-size;
-      height: 100%;
+      vertical-align: top;
     }
   }
 }
@@ -162,9 +182,18 @@ $workspace-width: 60%;
 .element {
   background-color: rgba(255, 255, 255, .2);
   color: rgba(255, 255, 255, .8);
-  border-radius: 3px;
   font-family: "Andale Mono", "Consolas", "Courier New", Courier, monospace;
+  border-radius: 3px;
   cursor: move;
+}
+
+.line {
+  color: rgba(255, 255, 255, .8);
+  font-family: "Andale Mono", "Consolas", "Courier New", Courier, monospace;
+  > * {
+    vertical-align: bottom;
+    padding: 0 2px;
+  }
 }
 
 body > .element {

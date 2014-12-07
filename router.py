@@ -23,15 +23,29 @@ def index():
     return render_template("index.html")
 
 
-test_html = ['<div style="background: #ff0000">',
-             '<div style="background: #00ff00">',
-             'Hey!',
-             '</div>',
-             '</div>']
-
-
 def js_array_str(list):
     return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in list])
+
+
+def js_array2_str(list):
+    return "[%s]" % ", ".join(["[%s]" % js_array_str(item)[1:-1] for item in list])
+
+
+test_html = [
+    '<div class="a">',
+    '<div class="b">',
+    'Hey!',
+    '</div>',
+    '</div>'
+]
+
+test_css = [
+    ["$$ {", "padding: 10px;", "}"],
+    ["$$ {", "background-color: #ff0000;", "}"],
+    ["$$ {", "background-color: #00ff00;", "}"]
+]
+
+test_css_args = ["div", ".a", ".b"]
 
 
 @app.route("/task/<int:index>")
@@ -39,5 +53,7 @@ def task(index):
     return render_template("task.html",
                            task={
                                "index": index,
-                               "html": js_array_str(test_html)
+                               "html": js_array_str(test_html),
+                               "css": js_array2_str(test_css),
+                               "cssArgs": js_array_str(test_css_args)
                            })
