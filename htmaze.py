@@ -23,7 +23,7 @@ app.debug = DEVELOPMENT
 
 from assets import *
 from router import *
-from jinja2ext import env
+from jinja2ext.env import *
 
 if __name__ == '__main__':
     app.run()
