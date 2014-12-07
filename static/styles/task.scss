@@ -13,7 +13,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
 @import "global";
 
 #layout {
@@ -26,16 +25,28 @@
 
   background-color: #ffffff;
   position: relative;
-
-  font-family: Helvetica, Arial, Geneva, sans-serif;
 }
 
 $toolbar-height: 32px;
 
 #toolbar {
-  background-color: #2e4c5f;
+  background-color: $color-toolbar;
   height: $toolbar-height;
   padding: 3px 20px;
+
+  > span,
+  > a {
+    color: #ffffff;
+  }
+
+  > span {
+    font-size: 1.4em;
+  }
+
+  > a {
+    float: right;
+    margin-top: 3px;
+  }
 }
 
 #page {
@@ -45,7 +56,6 @@ $toolbar-height: 32px;
   right: 0;
   bottom: 0;
 }
-
 
 .view {
   border-radius: 20px;
@@ -146,19 +156,19 @@ $workspace-width: 60%;
 }
 
 #workspace-html {
-  background-color: #0f62aa;
+  background-color: $color-html;
 }
 
 #workspace-css {
-  background-color: #a8420f;
+  background-color: $color-css;
 }
 
 #preview-target {
-  background-color: #0fa6a6;
+  background-color: $color-bar-light;
 }
 
 #preview-results {
-  background-color: #5aa60f;
+  background-color: $color-bar-dark;
 }
 
 #preview {
@@ -177,7 +187,6 @@ $workspace-width: 60%;
     }
   }
 }
-
 
 .element {
   background-color: rgba(255, 255, 255, .2);
@@ -198,4 +207,52 @@ $workspace-width: 60%;
 
 body > .element {
   position: absolute;
+}
+
+#solved {
+  position: absolute;
+  left: 0;
+  top: 0px;
+  bottom: 0;
+  right: 0;
+  transition: background-color 1s;
+  background-color: rgba(0, 0, 0, 0);
+  display: none;
+
+  > div {
+    box-sizing: border-box;
+    width: 500px;
+    margin-left: -250px;
+    left: 50%;
+    background-color: $color-toolbar;
+    position: absolute;
+    overflow: hidden;
+    border-radius: 0 0 20px 20px;
+    transition: top 1s;
+    top: -300px;
+
+    > div,
+    > a {
+      display: block;
+      padding: 20px 10px;
+      font-size: 3em;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 1px;
+    }
+
+    > a {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &.visible {
+    transition: background-color 1s;
+    background-color: rgba(0, 0, 0, 0.75);
+
+    > div {
+      transition: top 1s;
+      top: 0
+    }
+  }
 }

@@ -13,14 +13,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from flask import render_template
+from flask import render_template, abort, url_for
 from htmaze import app
 import re
+from tasks import tasks
 
 
 @app.route("/")
-def index():
-    return render_template("index.html")
+def content():
+    task_info = [{"url": url_for("task", index=i + 1),
+                  "has_css": t.css,
+                  "index": i + 1}
+                 for t, i in enumerate(tasks)]
+
+    return render_template("index.html",
+                           tasks=task_info)
 
 
 def js_array_str(list):
@@ -31,29 +38,21 @@ def js_array2_str(list):
     return "[%s]" % ", ".join(["[%s]" % js_array_str(item)[1:-1] for item in list])
 
 
-test_html = [
-    '<div class="a">',
-    '<div class="b">',
-    'Hey!',
-    '</div>',
-    '</div>'
-]
-
-test_css = [
-    ["$$ {", "padding: 10px;", "}"],
-    ["$$ {", "background-color: #ff0000;", "}"],
-    ["$$ {", "background-color: #00ff00;", "}"]
-]
-
-test_css_args = ["div", ".a", ".b"]
-
-
 @app.route("/task/<int:index>")
 def task(index):
+    if index < 1 or index > len(tasks):
+        abort(404)
+
+    t = tasks[index - 1]
     return render_template("task.html",
                            task={
                                "index": index,
-                               "html": js_array_str(test_html),
-                               "css": js_array2_str(test_css),
-                               "cssArgs": js_array_str(test_css_args)
+                               "html": js_array_str(t["html"]),
+                               "css": js_array2_str(t["css"]),
+                               "css_args": js_array_str(t["css_args"]),
+                               "has_next": index < len(tasks)
+                           },
+                           url={
+                               "content": url_for("content"),
+                               "next_task": url_for("task", index=index + 1)
                            })

@@ -27,7 +27,10 @@
             css = htmaze.validateCSS();
 
         if (html && css) {
-            alert("Solved!");
+            document.querySelector("#solved").style.display = "block";
+            setTimeout(function() {
+                document.querySelector("#solved").className = "visible";
+            }, 100);
         }
     };
 }());
