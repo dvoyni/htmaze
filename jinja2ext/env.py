@@ -15,4 +15,3 @@
 #
 from htmaze import app
 
-app.jinja_options['extensions'].append('jinja2ext.spaceless.SpacelessExtension')

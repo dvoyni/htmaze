@@ -21,9 +21,9 @@ DEVELOPMENT = str(os.environ.get('DEVELOPMENT', "")).lower() == "true"
 app = Flask(__name__)
 app.debug = DEVELOPMENT
 
+app.jinja_options['extensions'].append('jinja2ext.spaceless.SpacelessExtension')
 from assets import *
 from router import *
-from jinja2ext.env import *
 
 if __name__ == '__main__':
     app.run()
