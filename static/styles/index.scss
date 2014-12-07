@@ -16,4 +16,41 @@
 
 @import "global";
 
+#toolbar {
+  background-color: $color-toolbar;
+  height: 64px;
+  padding: 3px 20px;
 
+  > span {
+    font-size: 54px;
+    color: #ffffff;
+  }
+}
+
+#tasks {
+  text-align: center;
+  padding: 20px;
+
+  .task {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    background-color: $color-bar-dark;
+    position: relative;
+    cursor: pointer;
+
+    a {
+      display: block;
+      position: absolute;
+      color: #ffffff;
+      text-decoration: none;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      font-size: 100px;
+      padding-top: 15px;
+    }
+  }
+}

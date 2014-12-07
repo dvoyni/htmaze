@@ -22,5 +22,8 @@ app.config['ASSETS_DEBUG'] = DEVELOPMENT
 scripts = Bundle('scripts/*.js', filters='jsmin', output='gen/scripts.js')
 assets.register('scripts', scripts)
 
-styles = Bundle('styles/*.scss', filters='pyscss,cssmin', output='gen/styles.css')
-assets.register('styles', styles)
+assets.register('styles_index',
+                Bundle('styles/index.scss', filters='pyscss,cssmin', output='gen/styles.css'))
+
+assets.register('styles_task',
+                Bundle('styles/task.scss', filters='pyscss,cssmin', output='gen/styles.css'))

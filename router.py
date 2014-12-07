@@ -22,20 +22,29 @@ from tasks import tasks
 @app.route("/")
 def content():
     task_info = [{"url": url_for("task", index=i + 1),
-                  "has_css": t.css,
+                  "has_css": t["css"],
                   "index": i + 1}
-                 for t, i in enumerate(tasks)]
+                 for i, t in enumerate(tasks)]
 
     return render_template("index.html",
                            tasks=task_info)
 
 
+@app.route("/help")
+def help():
+    return render_template("help.html")
+
+
 def js_array_str(list):
-    return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in list])
+    if list:
+        return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in list])
+    return "null"
 
 
 def js_array2_str(list):
-    return "[%s]" % ", ".join(["[%s]" % js_array_str(item)[1:-1] for item in list])
+    if list:
+        return "[%s]" % ", ".join(["[%s]" % js_array_str(item)[1:-1] for item in list])
+    return "null"
 
 
 @app.route("/task/<int:index>")
@@ -54,5 +63,6 @@ def task(index):
                            },
                            url={
                                "content": url_for("content"),
-                               "next_task": url_for("task", index=index + 1)
+                               "help": url_for("help"),
+                               "next_task": url_for("task", index=index + 1),
                            })

@@ -2,9 +2,21 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>HTMaze</title>
+    {% assets "styles_index" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
+    {% endassets %}
 </head>
 <body>
-
+<div id="toolbar">
+    <span>The HTMaze</span>
+</div>
+<div id="tasks">
+    {% for task in tasks %}
+        <div class="task{% if tasks.has_css %} css{% endif %}">
+            <a href="{{ task.url }}">{{ task.index }}</a>
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>

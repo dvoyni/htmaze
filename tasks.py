@@ -13,8 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-tasks = [{"html": ['<div class="a">', '<div class="b">', 'Hey!', '</div>', '</div>'],
-          "css": [["$$ {", "padding: 10px;", "}"],
-                  ["$$ {", "background-color: #ff0000;", "}"],
-                  ["$$ {", "background-color: #00ff00;", "}"]],
-          "css_args": ["div", ".a", ".b"]}]
+tasks = [
+    {"html": ['<div class="a">', '<div class="b">', 'Hey!', '</div>', '</div>'],
+     "css": None,
+     "css_args": None},
+
+    {"html": ['<div class="a">', '<div class="b">', 'Hey!', '</div>', '</div>'],
+     "css": [["$$ {", "padding: 10px;", "}"],
+             ["$$ {", "background-color: #ff0000;", "}"],
+             ["$$ {", "background-color: #00ff00;", "}"]],
+     "css_args": ["div", ".a", ".b"]}
+]

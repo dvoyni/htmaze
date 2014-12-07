@@ -7,7 +7,7 @@
     {% assets "scripts" %}
         <script type="text/javascript" src="{{ ASSET_URL }}"></script>
     {% endassets %}
-    {% assets "styles" %}
+    {% assets "styles_task" %}
         <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
     {% endassets %}
     <script type="text/javascript">
@@ -18,7 +18,8 @@
     <div id="layout">
         <div id="toolbar">
             <span>The HTMaze &dash; task #{{ task.index }}</span>
-            <a href="{{ url.content }}">Back</a>
+            <a href="{{ url.content }}">Contents</a>
+            <a href="{{ url.help }}">Help</a>
         </div>
         <div id="page" class="split-view horizontal">
             <div id="workspace" class="split-view vertical">
@@ -51,7 +52,7 @@
                     {% if task.has_next %}
                         <a href="{{ url.next_task }}">Next</a>
                     {% endif %}
-                    <a href="{{ url.content }}">Content</a>
+                    <a href="{{ url.content }}">Contents</a>
                 </div>
             </div>
         </div>
