@@ -13,14 +13,63 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-tasks = [
-    {"html": ['<div class="a">', '<div class="b">', 'Hey!', '</div>', '</div>'],
-     "css": None,
-     "css_args": None},
+import re
 
-    {"html": ['<div class="a">', '<div class="b">', 'Hey!', '</div>', '</div>'],
-     "css": [["$$ {", "padding: 10px;", "}"],
-             ["$$ {", "background-color: #ff0000;", "}"],
-             ["$$ {", "background-color: #00ff00;", "}"]],
-     "css_args": ["div", ".a", ".b"]}
+css_re = re.compile("\[(.+?)\]+?")
+
+
+def _ct(html, css=None):
+    csslines = None
+    args = None
+
+    if css:
+        args = re.findall(css_re, css)
+        css = re.sub(css_re, "$$", css)
+        csslines = []
+        cssline = []
+
+        for line in [line.strip() for line in css.split("\n")]:
+            if len(line) == 0 and len(cssline) > 0:
+                csslines.append(cssline)
+                cssline = []
+            else:
+                cssline.append(line)
+        if len(cssline) > 0:
+            csslines.append(cssline)
+
+    return {"html": list(filter(lambda l: len(l) > 0, [line.strip() for line in html.split("\n")])),
+            "css": csslines,
+            "css_args": args}
+
+
+tasks = [
+    _ct("""
+        <div style="background-color: #B7FF72; padding: 10px;">
+            <div style="border-radius: 10px; background-color: #FFB241; text-align: center;">
+                It was easy
+            </div>
+        </div>
+        """),
+
+    _ct("""
+        <div class="foo">
+            <div class="bar" style="border-radius: 10px;">
+                It was easy
+            </div>
+        </div>
+        """,
+        """
+        [.foo] {
+            background-color: #B7FF72;
+        }
+
+        [.bar] {
+            background-color: #FFB241;
+            text-align: center;
+        }
+
+        [div] {
+            padding: 10px;
+        }
+        """),
 ]

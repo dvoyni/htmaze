@@ -35,15 +35,15 @@ def help():
     return render_template("help.html")
 
 
-def js_array_str(list):
-    if list:
-        return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in list])
+def _js_array_str(array):
+    if array:
+        return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in array])
     return "null"
 
 
-def js_array2_str(list):
-    if list:
-        return "[%s]" % ", ".join(["[%s]" % js_array_str(item)[1:-1] for item in list])
+def _js_array2_str(array):
+    if array:
+        return "[%s]" % ", ".join(["[%s]" % _js_array_str(item)[1:-1] for item in array])
     return "null"
 
 
@@ -56,9 +56,9 @@ def task(index):
     return render_template("task.html",
                            task={
                                "index": index,
-                               "html": js_array_str(t["html"]),
-                               "css": js_array2_str(t["css"]),
-                               "css_args": js_array_str(t["css_args"]),
+                               "html": _js_array_str(t["html"]),
+                               "css": _js_array2_str(t["css"]),
+                               "css_args": _js_array_str(t["css_args"]),
                                "has_next": index < len(tasks)
                            },
                            url={
