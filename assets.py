@@ -13,17 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os
-from flask import Flask
+from flask.ext.assets import Environment, Bundle
+from htmaze import app, DEVELOPMENT
 
-DEVELOPMENT = str(os.environ.get('DEVELOPMENT', "")).lower() == "true"
+assets = Environment(app)
+app.config['ASSETS_DEBUG'] = DEVELOPMENT
 
-app = Flask(__name__)
-app.debug = DEVELOPMENT
+scripts = Bundle('scripts/*.js', filters='jsmin', output='gen/scripts.js')
+assets.register('scripts', scripts)
 
-from assets import *
-from router import *
-from jinja2ext import env
-
-if __name__ == '__main__':
-    app.run()
+styles = Bundle('styles/*.scss', filters='pyscss,cssmin', output='gen/styles.css')
+assets.register('styles', styles)

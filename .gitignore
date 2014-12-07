@@ -56,3 +56,5 @@ target/
 #ItelliJ IDEA
 .idea/
 *.iml
+static/.webassets-cache
+static/gen

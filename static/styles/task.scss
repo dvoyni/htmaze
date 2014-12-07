@@ -1,0 +1,172 @@
+/*
+ * Copyright 2014 Sergey Dvoynikov
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+@import "global";
+
+#layout {
+  &, * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  width: 100%;
+  height: 100%;
+
+  background-color: #ffffff;
+
+  font-family: Helvetica, Arial, Geneva, sans-serif;
+}
+
+$toolbar-height: 32px;
+
+#toolbar {
+  background-color: #2e4c5f;
+  height: $toolbar-height;
+  padding: 3px 20px;
+}
+
+#page {
+  position: absolute;
+  left: 0;
+  top: $toolbar-height;
+  right: 0;
+  bottom: 1;
+}
+
+$workspace-width: 60%;
+
+#workspace {
+  width: $workspace-width;
+  height: 100%;
+
+  > * {
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+
+    > .header {
+      text-align: center;
+      color: #ffffff;
+      padding: 5px 0 10px 0;
+    }
+
+    .element {
+      margin: 2px;
+      padding: 3px 10px;
+    }
+
+    > .elements {
+      border-bottom: 1px solid #ffffff;
+      padding-bottom: 3px;
+      min-height: 25px;
+
+      > .element {
+        display: inline-block;
+      }
+    }
+
+    > .code {
+      position: relative;
+      min-height: 75px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+      .element {
+        display: block;
+        border-radius: 0;
+
+        > .element {
+          margin-left: 30px;
+          margin-right: 0;
+        }
+
+        > .close-tag {
+          margin-left: 0;
+          background: transparent;
+          padding-left: 0;
+        }
+      }
+
+      > .cursor {
+        position: absolute;
+        display: none;
+        right: 0;
+        left: 0;
+        border-top: 4px dashed rgba(255, 255, 255, 0.75);
+        height: 4px;
+        margin-top: -2px;
+
+        &.visible {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+#workspace-html {
+  background-color: #0f62aa;
+}
+
+#workspace-css {
+  background-color: #a8420f;
+}
+
+#preview {
+  width: 100% - $workspace-width;
+  height: 100%;
+}
+
+.split-view {
+  $splitter-size: 0;
+
+  .splitter {
+    background-color: #cccccc;
+    display: none;
+  }
+
+  &.vertical {
+    .splitter {
+      width: 100%;
+      height: $splitter-size;
+    }
+  }
+
+  &.horizontal {
+    > * {
+      display: inline-block;
+    }
+
+    .splitter {
+      width: $splitter-size;
+      height: 100%;
+    }
+  }
+}
+
+
+.element {
+  background-color: rgba(255, 255, 255, .2);
+  color: rgba(255, 255, 255, .8);
+  border-radius: 3px;
+  font-family: "Andale Mono", "Consolas", "Courier New", Courier, monospace;
+  cursor: move;
+}
+
+body > .element {
+  position: absolute;
+}

@@ -13,17 +13,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os
-from flask import Flask
 
-DEVELOPMENT = str(os.environ.get('DEVELOPMENT', "")).lower() == "true"
+# -*- coding: utf-8 -*-
 
-app = Flask(__name__)
-app.debug = DEVELOPMENT
+from jinja2 import nodes
+from jinja2.ext import Extension
 
-from assets import *
-from router import *
-from jinja2ext import env
+import re
 
-if __name__ == '__main__':
-    app.run()
+
+class SpacelessExtension(Extension):
+    tags = {'spaceless'}
+
+    def parse(self, parser):
+        lineno = parser.stream.next().lineno
+        body = parser.parse_statements(['name:endspaceless'], drop_needle=True)
+        return nodes.CallBlock(
+            self.call_method('_strip_spaces', [], [], None, None), [], [], body).set_lineno(lineno)
+
+    def _strip_spaces(self, caller=None):
+        return re.sub(r">\s*<", "><", str(caller().strip()))

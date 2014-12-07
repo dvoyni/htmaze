@@ -13,10 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from flask import render_template
 from htmaze import app
+import re
 
-__author__ = 'yarg'
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+test_html = ['<div style="background: #ff0000">',
+             '<div style="background: #00ff00">',
+             'Hey!',
+             '</div>',
+             '</div>']
+
+
+def js_array_str(list):
+    return "[%s]" % ", ".join(["\"%s\"" % re.sub(r'"', "\\\"", item) for item in list])
+
+
+@app.route("/task/<int:index>")
+def task(index):
+    return render_template("task.html",
+                           task={
+                               "index": index,
+                               "html": js_array_str(test_html)
+                           })

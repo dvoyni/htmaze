@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% spaceless %}
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>HTMaze - Task #{{ task.index }}</title>
+    {% assets "scripts" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+    {% assets "styles" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css">
+    {% endassets %}
+    <script type="text/javascript">
+        htmaze.init({{ task.html|safe }});
+    </script>
+</head>
+<body>
+    <div id="layout">
+        <div id="toolbar"></div>
+        <div id="page" class="split-view horizontal">
+            <div id="workspace" class="split-view vertical">
+                <div id="workspace-html">
+                    <div class="header">HTML workspace</div>
+                    <div class="elements"></div>
+                    <div class="code">
+                        <div class="cursor"></div>
+                    </div>
+                </div>
+                <div class="splitter"></div>
+                <div id="workspace-css">
+                    <div class="header">CSS workspace</div>
+                    <div class="elements"></div>
+                    <div class="code">
+                        <div class="cursor"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="splitter"></div>
+            <div id="preview" class="split-view vertical">
+                <div id="results"></div>
+                <div class="splitter"></div>
+                <div id="target"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endspaceless %}
