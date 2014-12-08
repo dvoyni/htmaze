@@ -106,6 +106,7 @@ tasks = [
             color: blue;
             font-size: [large];
         }
+
         [#link-to-w3s] {
             color: black;
             font-size: [small];
