@@ -58,7 +58,9 @@
             map(function(element) {
                 element.addEventListener("dragstart", function(event) {
                     event.dataTransfer.effectAllowed = "move";
-                    event.dataTransfer.setData("text/plain", event.textContent);
+                    if (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
+                        event.dataTransfer.setData("text/plain", event.textContent);
+                    }
                     element.style.marginLeft = "";
                     htmaze.draggingElement = element;
                     htmaze.draggingElementOffsetY = event.offsetY || 0;

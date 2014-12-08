@@ -55,8 +55,11 @@
             map(function(element) {
                 element.addEventListener("dragstart", function(event) {
                     event.dataTransfer.effectAllowed = "move";
+                    if (navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
+                        event.dataTransfer.setData("text/plain", event.textContent);
+                    }
                     htmaze.draggingElement = element;
-                    htmaze.draggingElementOffsetY = event.offsetY;
+                    htmaze.draggingElementOffsetY = event.offsetY || 0;
                 });
                 return element;
             }).
