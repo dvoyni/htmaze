@@ -17,13 +17,27 @@
 @import "global";
 
 #toolbar {
+  position: absolute;
+  left:0;
+  top:0;
+  right:0;
   background-color: $color-toolbar;
   height: 64px;
   padding: 3px 20px;
 
+  > span,
+  > a {
+    color: #ffffff;
+  }
+
   > span {
     font-size: 54px;
-    color: #ffffff;
+  }
+
+  > a {
+    float: right;
+    margin-top: 3px;
+    margin-left: 50px;
   }
 }
 
@@ -52,5 +66,21 @@
       font-size: 100px;
       padding-top: 15px;
     }
+  }
+}
+
+
+#help {
+  position: absolute;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  top: 70px;
+  bottom: 0;
+
+  > div {
+    background: transparent url("/static/help.png") no-repeat center;
+    min-width: 1122px;
+    min-height: 817px;
   }
 }
