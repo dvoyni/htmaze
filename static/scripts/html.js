@@ -44,7 +44,7 @@
             sort(function(a, b) { return a.text < b.text; }).
             map(function(info) {
                 var element = document.createElement("div");
-                element.innerText = info.text;
+                element.textContent = info.text;
                 element.id = info.id;
                 element.className = "element";
                 element.setAttribute("data-is-tag", info.isTag);
@@ -58,9 +58,10 @@
             map(function(element) {
                 element.addEventListener("dragstart", function(event) {
                     event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData("text/plain", event.textContent);
                     element.style.marginLeft = "";
                     htmaze.draggingElement = element;
-                    htmaze.draggingElementOffsetY = event.offsetY;
+                    htmaze.draggingElementOffsetY = event.offsetY || 0;
                 });
 
                 return element;
@@ -179,7 +180,7 @@
             preview = document.querySelector("#preview-results .area"),
             lines = Array.prototype.slice.apply(htmlCode.children),
             compiled = lines.
-                map(function(element) { return element.innerText; }).
+                map(function(element) { return element.textContent; }).
                 join(""),
             tab = 0;
 

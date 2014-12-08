@@ -45,7 +45,7 @@
             sort(function(a, b) { return a.text < b.text; }).
             map(function(arg) {
                 var element = document.createElement("div");
-                element.innerText = arg.text;
+                element.textContent = arg.text;
                 element.id = arg.id;
                 element.className = "element";
                 element.draggable = true;
