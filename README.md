@@ -1,4 +1,4 @@
-# HTMaze - Koding Global Virtual Hackathon
+# HTMaze
 
 ## Description
 
