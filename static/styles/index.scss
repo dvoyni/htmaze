@@ -43,7 +43,9 @@
 
 #tasks {
   text-align: center;
-  padding: 20px;
+  padding: 90px 20px 20px 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   .task {
     display: inline-block;
@@ -53,6 +55,7 @@
     background-color: $color-bar-dark;
     position: relative;
     cursor: pointer;
+    margin: 10px;
 
     a {
       display: block;

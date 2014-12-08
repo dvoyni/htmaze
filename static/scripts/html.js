@@ -16,7 +16,8 @@
 
 (function() {
     "use strict";
-    var htmaze = window.htmaze;
+    var htmaze = window.htmaze,
+        solution;
 
     if (!htmaze) {
         window.htmaze = htmaze = { };
@@ -26,6 +27,8 @@
         var elementsNode = document.querySelector("#workspace-html .elements"),
             codeNode = document.querySelector("#workspace-html .code");
 
+        solution = source.join("");
+
         source.
             map(function(line) { return line.trim(); }).
             filter(function(line) { return line.length > 0; }).
@@ -33,8 +36,8 @@
                 return {
                     text: line,
                     id: "html-" + (htmaze.unique++),
-                    isTag: line.indexOf("<") === 0 && line.indexOf(">") === line.length - 1,
-                    isSolo: line.indexOf("/>") === line.length - 2,
+                    isTag: line.indexOf("<") === 0 && line.lastIndexOf(">") === line.length - 1,
+                    isSolo: line.lastIndexOf("/>") === line.length - 2 || (line.indexOf("</") > 0),
                     isClosing: line.indexOf("</") === 0
                 };
             }).
@@ -91,7 +94,7 @@
                     oy = htmaze.draggingElementOffsetY,
                     cursor = codeNode.querySelector(".cursor"),
                     elements = codeNode.querySelectorAll(".element"),
-                    elementY = event.clientY - offset.top - oy,
+                    elementY = event.clientY - offset.top - oy + codeNode.parentNode.scrollTop,
                     refOffset, refElement, insertMode, i, e, top;
 
                 for (i = elements.length - 1; i >= 0; i--) {
@@ -174,7 +177,6 @@
     htmaze.validateHTML = function() {
         var htmlCode = document.querySelector("#workspace-html .code"),
             preview = document.querySelector("#preview-results .area"),
-            target = document.querySelector("#preview-target .area").innerHTML,
             lines = Array.prototype.slice.apply(htmlCode.children),
             compiled = lines.
                 map(function(element) { return element.innerText; }).
@@ -196,6 +198,6 @@
         });
 
         preview.innerHTML = compiled;
-        return compiled === target;
+        return compiled === solution;
     };
 }());

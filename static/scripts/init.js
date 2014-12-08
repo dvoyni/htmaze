@@ -38,6 +38,9 @@
 
     htmaze.updateCodeSize = function(codeNode, elementsNode) {
         codeNode.style.top = elementsNode.offsetTop + elementsNode.offsetHeight + "px";
+        codeNode.style.bottom = "auto";
+        codeNode.style.minHeight =
+            (codeNode.offsetParent.offsetHeight - codeNode.offsetTop - 10) + "px";
     };
 
     htmaze.init = function(html, css, cssArgs) {

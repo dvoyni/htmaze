@@ -44,32 +44,149 @@ def _ct(html, css=None):
 
 tasks = [
     _ct("""
-        <div style="background-color: #B7FF72; padding: 10px;">
-            <div style="border-radius: 10px; background-color: #FFB241; text-align: center;">
-                It was easy
-            </div>
-        </div>
+    <h1>
+    This is a Heading
+    </h1>
+    <p>
+    This is a paragraph
+    </p>
+    """),
+
+    _ct("""
+    <p>
+    This text is normal.
+    </p>
+    <p><strong>
+    This text is strong.
+    </strong></p>
+    <p><i>
+    This text is italic
+    </i></p>
+    """),
+
+    _ct("""
+    <h1>
+    This is a Heading
+    </h1>
+    <p>
+    This is a paragraph
+    </p>
+    """,
+        """
+        [h1] { color: green; }
+
+        [p] { color: white; }
         """),
 
     _ct("""
-        <div class="foo">
-            <div class="bar" style="border-radius: 10px;">
-                It was easy
-            </div>
-        </div>
-        """,
+    <h1>
+    This is a Heading
+    </h1>
+    <p>
+    This is a paragraph
+    </p>
+    """,
         """
-        [.foo] {
-            background-color: #B7FF72;
-        }
+        [h1] { color: green; }
 
-        [.bar] {
-            background-color: #FFB241;
-            text-align: center;
-        }
+        [p] { color: white; }
+        """),
 
-        [div] {
-            padding: 10px;
+    _ct("""
+    <a href="http://koding.com/" target="_blank" id="link-to-koding">
+    Koding.com
+    </a>
+    <br />
+    <a href="http://w3schools.com/" target="_blank" id="link-to-w3s">
+    w3schools.com
+    </a>
+    """,
+        """
+        [#link-to-koding] {
+            color: blue;
+            font-size: [large];
+        }
+        [#link-to-w3s] {
+            color: black;
+            font-size: [small];
         }
         """),
+    _ct("""
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Version</th>
+        </tr>
+        <tr>
+            <td>1999</td><td>HTML4</td>
+        </tr>
+        <tr>
+            <td>2014</td><td>HTML5</td>
+        </tr>
+    </table>
+    """,
+        """
+        [table] { width: [100%]; }
+
+        th { background-color: [grey]; }
+
+        td { border: [1px] solid [black]; }
+
+        [td, th] { [text-align]: center; }
+        """),
+    _ct("""
+    <div class="block top">
+        Top block
+    </div>
+    <div class="inline">
+        Left block
+    </div>
+    <div class="inline">
+        Right block
+    </div>
+    <div class="block bottom">
+        Bottom block
+    </div>
+    """,
+        """
+        [div] {
+        border: 1px solid white;
+        color: [white];
+        background-color: [green];
+        padding: 10px;
+         }
+
+        [.block] { [display]: block; }
+
+        [.inline] { display: [inline-block]; width: 50%;}
+
+        .top { background-color: [navy]; }
+
+        .bottom { background-color: [orange]; }
+        """),
+    _ct("""
+    <div>
+        <ol>
+            <li>first</li>
+            <li>second</li>
+            <li>third</li>
+        </ol>
+    </div>
+    <div>
+        <ul>
+            <li>apple</li>
+            <li>banana</li>
+            <li>watermelon</li>
+        </ul>
+    </div>
+    """,
+        """
+        [div] { display: [inline-block]; }
+
+        [ol] [li][:nth-child(2)] { color: blue; }
+
+        [ul] [li][:nth-child(3)] { color: red; }
+
+        [ol] { [margin-right]: 20px; }
+        """)
 ]
